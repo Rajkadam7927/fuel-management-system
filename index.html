@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b4ea2">
+  <title>Fuel Management System | MEMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ════════════════════ LOGIN ════════════════════ -->
+  <section id="loginScreen" class="login-screen">
+    <div class="login-bg"></div>
+    <form id="loginForm" class="login-card" autocomplete="on">
+      <div class="brand-lockup center">
+        <img src="images/logo.png" alt="SUMEET SSG logo" class="login-logo" onerror="this.style.display='none';document.getElementById('loginLogoFallback').style.display='grid'">
+        <div id="loginLogoFallback" class="logo-fallback">108</div>
+        <h1>Fuel Management System</h1>
+        <p>SUMEET SSG MAHARASHTRA EMS PRIVATE LIMITED</p>
+        <span>Maharashtra 108 Ambulance Services (MEMS)</span>
+      </div>
+      <div id="loginError" class="alert hidden"></div>
+      <label for="loginUser">User ID</label>
+      <input id="loginUser" type="text" autocomplete="off" required>
+      <label for="loginPass">Access Key</label>
+      <div class="secure-row">
+        <input id="loginPass" type="password" autocomplete="off" required>
+        <button id="togglePassword" type="button" class="icon-btn" aria-label="Toggle secure entry visibility">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 4.5C5.5 4.5 1.7 7.6 0 10c1.7 2.4 5.5 5.5 10 5.5S18.3 12.4 20 10C18.3 7.6 14.5 4.5 10 4.5zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-5.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+        </button>
+      </div>
+      <div class="login-tools">
+        <label class="checkline"><input id="rememberMe" type="checkbox"> Remember Me</label>
+        <button id="forgotPassword" type="button" class="link-btn">Account Help</button>
+      </div>
+      <button class="primary-btn full-btn" type="submit">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3zm10.293 9.293a1 1 0 0 0 1.414 1.414l3-3a1 1 0 0 0 0-1.414l-3-3a1 1 0 0 0-1.414 1.414L14.586 9H7a1 1 0 1 0 0 2h7.586l-1.293 1.293z" clip-rule="evenodd"/></svg>
+        Sign In
+      </button>
+    </form>
+  </section>
+
+  <!-- ════════════════════ APP SHELL ════════════════════ -->
+  <div id="appShell" class="app-shell hidden">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="Company logo">
+        <div class="sidebar-brand-text">
+          <strong>Fuel Management</strong>
+          <span>MEMS 108 Ambulance Services</span>
+        </div>
+      </div>
+      <nav id="navMenu" class="nav-menu" aria-label="Main navigation"></nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebarAvatarIcon">SA</div>
+          <div class="sidebar-user-info">
+            <div id="sidebarUserName"></div>
+            <span id="sidebarUserRole"></span>
+          </div>
+        </div>
+        <button id="logoutBtn" class="logout-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h7a1 1 0 1 0 0-2H4V5h6a1 1 0 1 0 0-2H3zm10.293 9.293a1 1 0 0 0 1.414 1.414l3-3a1 1 0 0 0 0-1.414l-3-3a1 1 0 0 0-1.414 1.414L14.586 9H9a1 1 0 1 0 0 2h5.586l-1.293 1.293z" clip-rule="evenodd"/></svg>
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <button id="menuToggle" class="icon-btn mobile-only" type="button" aria-label="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <img class="topbar-logo" src="images/logo.png" alt="Sumeet SSG">
+        <div class="topbar-title">
+          <h2 id="pageTitle">Dashboard</h2>
+          <p id="topbarSubtitle">SUMEET SSG MAHARASHTRA EMS PRIVATE LIMITED</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="refreshCentralDataBtn" class="outline-btn small" type="button">Refresh / Sync Latest Data</button>
+          <span id="sheetStatus" class="sheet-status">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M17.707 9.293a1 1 0 0 1 0 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7A.997.997 0 0 1 2 10V5a3 3 0 0 1 3-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" clip-rule="evenodd"/></svg>
+            Offline Mode
+          </span>
+          <span id="todayClock" class="topbar-clock"></span>
+          <div class="topbar-user">
+            <div id="userAvatar" class="avatar">SA</div>
+            <div class="user-text">
+              <strong id="userInfoName"></strong>
+              <span id="userInfoRole"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ══ DASHBOARD ══ -->
+      <section id="page-dashboard" class="page active">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">Dashboard</h2>
+            <p class="page-subtitle">Overview of Fuel Operations</p>
+          </div>
+          <div class="dashboard-filters panel">
+            <label>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 0 0-1 1v1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zm0 5a1 1 0 0 0 0 2h8a1 1 0 1 0 0-2H6z" clip-rule="evenodd"/></svg>
+              Date
+              <input id="dashboardDate" type="date">
+            </label>
+            <label>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 1 1 9.9 9.9L10 18.9l-4.95-4.95a7 7 0 0 1 0-9.9zm4.95.95a5 5 0 1 0 0 10A5 5 0 0 0 10 5zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" clip-rule="evenodd"/></svg>
+              District
+              <select id="dashboardDistrict"></select>
+            </label>
+            <label>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM17 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 0 0-1.5-4.33A5 5 0 0 1 19 16v1h-6.07zM6 11a5 5 0 0 1 5 5v1H1v-1a5 5 0 0 1 5-5z"/></svg>
+              Cluster
+              <select id="dashboardCluster"></select>
+            </label>
+            <button id="refreshDashboardBtn" class="primary-btn" type="button">
+              <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 0 1 1 1v2.101a7.002 7.002 0 0 1 11.601 2.566 1 1 0 1 1-1.885.666A5.002 5.002 0 0 0 5.999 7H9a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm.008 9.057a1 1 0 0 1 1.276.61A5.002 5.002 0 0 0 14.001 13H11a1 1 0 1 1 0-2h5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-2.101a7.002 7.002 0 0 1-11.601-2.566 1 1 0 0 1 .61-1.276z" clip-rule="evenodd"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <div id="dashboardCards" class="kpi-grid"></div>
+
+        <div class="dashboard-grid">
+          <article class="panel wide">
+            <div class="panel-head">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path d="M2 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zm6-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V7zm6-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V4z"/></svg>
+                Fuel Cost Trend
+              </h3>
+              <span class="panel-badge">This Month</span>
+            </div>
+            <div id="fuelTrendChart" class="chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 1 1 9.9 9.9L10 18.9l-4.95-4.95a7 7 0 0 1 0-9.9zM10 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" clip-rule="evenodd"/></svg>
+                District Wise Analysis
+              </h3>
+              <span class="panel-badge">Today</span>
+            </div>
+            <div id="districtChart" class="chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path d="M8 16.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM15 16.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/><path d="M3 4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1.05a2.5 2.5 0 0 1 4.9 0H10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H3zM14 7h2l3 4v4h-1.05a2.5 2.5 0 0 1-4.9 0H11V7h3z"/></svg>
+                Vehicle Wise Analysis
+              </h3>
+              <span class="panel-badge">This Month</span>
+            </div>
+            <div id="vehicleChart" class="chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path fill-rule="evenodd" d="M10 2a4 4 0 0 0-4 4v1H5a1 1 0 0 0-.994.89l-1 9A1 1 0 0 0 4 18h12a1 1 0 0 0 .994-1.11l-1-9A1 1 0 0 0 15 7h-1V6a4 4 0 0 0-4-4zm2 5V6a2 2 0 1 0-4 0v1h4zm-6 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm7-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" clip-rule="evenodd"/></svg>
+                Vendor Analysis
+              </h3>
+              <span class="panel-badge">This Month</span>
+            </div>
+            <div id="vendorChart" class="chart"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path fill-rule="evenodd" d="M4 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2V6h10a2 2 0 0 0-2-2H4zm2 6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H6zm11 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" clip-rule="evenodd"/></svg>
+                Budget Analysis
+              </h3>
+              <span class="panel-badge">This Month</span>
+            </div>
+            <div id="budgetAnalysis" class="budget-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--amber);vertical-align:-2px;margin-right:6px"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1-8a1 1 0 0 0-1 1v3a1 1 0 0 0 2 0V6a1 1 0 0 0-1-1z" clip-rule="evenodd"/></svg>
+                Alerts &amp; Exceptions
+              </h3>
+              <span class="panel-badge">Today</span>
+            </div>
+            <div id="alertList" class="alert-list"></div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path fill-rule="evenodd" d="M4 4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-5L9 4H4zm7 5a1 1 0 1 0-2 0v1H8a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1V9z" clip-rule="evenodd"/></svg>
+              Recent Fuel Entries
+            </h3>
+            <button class="outline-btn small" data-nav="fuel-entries" type="button">
+              View All
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 0 1 0-1.414L10.586 10 7.293 6.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0z" clip-rule="evenodd"/></svg>
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th><th>Vehicle</th><th>Pilot</th><th>District</th>
+                  <th>Vendor</th><th>Fuel (Ltr)</th><th>Cost (₹)</th><th>Mileage</th>
+                </tr>
+              </thead>
+              <tbody id="recentFuelBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- ══ FUEL ENTRY ══ -->
+      <section id="page-fuel-entry" class="page">
+        <form id="fuelEntryForm" class="panel form-panel">
+          <div class="panel-head">
+            <h3>
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color:var(--blue);vertical-align:-2px;margin-right:6px"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-11a1 1 0 1 0-2 0v2H7a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2V7z" clip-rule="evenodd"/></svg>
+              Professional Fuel Entry
+            </h3>
+            <span id="entryModeBadge" class="badge blue">New Entry</span>
+          </div>
+          <input id="editEntryId" type="hidden">
+          <div class="form-grid">
+            <label>Date<input id="fuelDate" type="date" required></label>
+            <label>Calling Date<input id="callingDate" type="date" required></label>
+            <label>Vehicle Number<input id="vehicleNumber" list="vehicleList" required></label>
+            <div id="vehicleInfoPanel" class="vehicle-info-panel full">
+              <div class="vehicle-info-empty">Select a vehicle to view master, fuel card, and last fuel details.</div>
+            </div>
+            <label>Pilot Name<input id="pilotName" list="pilotList"></label>
+            <label>Pilot Mobile<input id="pilotMobile" inputmode="numeric" maxlength="10"></label>
+            <label>Pilot ID<input id="pilotId"></label>
+            <label>Vendor<select id="vendor"></select></label>
+            <label>Fuel Product<select id="fuelProduct"></select></label>
+            <label>Vehicle Type<input id="vehicleType" readonly></label>
+            <label>Price<input id="price" type="number" step="0.01" min="0" required></label>
+            <label>Volume<input id="volume" type="number" step="0.01" min="0" required></label>
+            <label>Amount<input id="amount" type="number" step="0.01" readonly></label>
+            <label>Current KM<input id="currentKm" type="number" min="0"></label>
+            <label>Previous KM<input id="previousKm" type="number" min="0"></label>
+            <label>Total KM<input id="totalKm" type="number" readonly></label>
+            <label>Mileage<input id="mileage" type="number" step="0.01" readonly></label>
+            <label>District<select id="district"></select></label>
+            <label>Cluster<select id="cluster"></select></label>
+            <label>Base Location<input id="baseLocation" list="baseLocationList"></label>
+            <label>ADM<input id="adm"></label>
+            <label>DM<input id="dm"></label>
+            <label>Fuel Card Number<input id="fuelCardNumber" readonly></label>
+            <label>Fuel Card Vendor<input id="fuelCardVendor" readonly></label>
+            <label>Fuel Card Monthly Budget<input id="fuelCardMonthlyBudget" readonly></label>
+            <label>Fuel Card Used Budget<input id="fuelCardUsedBudget" readonly></label>
+            <label>Fuel Card Remaining Budget<input id="fuelCardRemainingBudget" readonly></label>
+            <label>Budget Status<input id="fuelCardBudgetStatus" readonly></label>
+            <label class="full">Remarks<textarea id="remarks" rows="3"></textarea></label>
+          </div>
+          <div class="actions">
+            <button id="saveEntryBtn" class="primary-btn" type="submit">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M7.707 10.293a1 1 0 1 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0l3-3a1 1 0 0 0-1.414-1.414L11 11.586V6h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5v5.586l-1.293-1.293z"/></svg>
+              Save Entry
+            </button>
+            <button id="saveSyncEntryBtn" class="success-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 0 1 1 1v2.101a7.002 7.002 0 0 1 11.601 2.566 1 1 0 1 1-1.885.666A5.002 5.002 0 0 0 5.999 7H9a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm.008 9.057a1 1 0 0 1 1.276.61A5.002 5.002 0 0 0 14.001 13H11a1 1 0 1 1 0-2h5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-2.101a7.002 7.002 0 0 1-11.601-2.566 1 1 0 0 1 .61-1.276z" clip-rule="evenodd"/></svg>
+              Save &amp; Sync
+            </button>
+            <button id="resetEntryBtn" class="outline-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 0 1 1 1v2.101a7.002 7.002 0 0 1 11.601 2.566 1 1 0 1 1-1.885.666A5.002 5.002 0 0 0 5.999 7H9a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" clip-rule="evenodd"/></svg>
+              Reset
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ══ REMAINING PAGES (IDs preserved) ══ -->
+      <section id="page-fuel-approval" class="page">
+        <div class="panel">
+          <div class="panel-head"><h3>Fuel Approval</h3></div>
+          <div id="approvalCards" class="kpi-grid compact"></div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Date</th><th>Vehicle</th><th>Vendor</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="approvalBody"></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-fuel-entries" class="page">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Fuel Entries</h3>
+            <div class="toolbar">
+              <input id="entrySearch" placeholder="Search vehicle, pilot, vendor, district…">
+              <select id="entryDistrictFilter"></select>
+              <button id="exportEntriesBtn" class="outline-btn" type="button">
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm3.293-7.707a1 1 0 0 1 1.414 0L9 10.586V3a1 1 0 1 1 2 0v7.586l1.293-1.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>
+                Export Excel
+              </button>
+              <button id="printEntriesBtn" class="outline-btn" type="button">
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-2h1a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1zm2 0h6v3H7V4zm0 8h6v4H7v-4zm-3-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" clip-rule="evenodd"/></svg>
+                Print
+              </button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Date</th><th>Vehicle</th><th>Pilot</th><th>Vendor</th><th>Product</th><th>Volume</th><th>Amount</th><th>KM</th><th>Mileage</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="entriesBody"></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-fuel-vendors" class="page"><div id="fuelVendorsCrud"></div></section>
+      <section id="page-fuel-cards" class="page"><div id="fuelCardsCrud"></div></section>
+      <section id="page-vehicles" class="page"><div id="vehiclesCrud"></div></section>
+      <section id="page-drivers" class="page"><div id="driversCrud"></div></section>
+      <section id="page-base-locations" class="page"><div id="baseLocationsCrud"></div></section>
+      <section id="page-vehicle-types" class="page"><div id="vehicleTypesCrud"></div></section>
+
+      <section id="page-daily-report" class="page"><div id="dailyReport"></div></section>
+      <section id="page-weekly-report" class="page"><div id="weeklyReport"></div></section>
+      <section id="page-monthly-report" class="page"><div id="monthlyReport"></div></section>
+      <section id="page-district-report" class="page"><div id="districtReport"></div></section>
+      <section id="page-vehicle-report" class="page"><div id="vehicleReport"></div></section>
+      <section id="page-vendor-report" class="page"><div id="vendorReport"></div></section>
+      <section id="page-mileage-report" class="page"><div id="mileageReport"></div></section>
+      <section id="page-exception-report" class="page"><div id="exceptionReport"></div></section>
+      <section id="page-cluster-report" class="page"><div id="clusterReport"></div></section>
+
+      <section id="page-users" class="page">
+        <div class="panel">
+          <div class="panel-head"><h3>User Management</h3></div>
+          <div id="userForm" class="form-grid inline-form">
+            <label>User ID<input id="newUsername"></label>
+            <label>Name<input id="newName"></label>
+            <label>Role<select id="newRole"></select></label>
+            <label>District<select id="newDistrict"></select></label>
+            <label>Access Key<input id="newPassword" type="password"></label>
+            <button id="addUserBtn" class="primary-btn" type="button">Add User</button>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>User ID</th><th>Name</th><th>Role</th><th>District</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="usersBody"></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-settings" class="page">
+        <div class="panel form-panel">
+          <div class="panel-head"><h3>Settings</h3></div>
+          <div id="sheetConnectionStatus" class="kpi-grid compact"></div>
+          <div class="form-grid">
+            <label class="full">Google Apps Script Web App URL<input id="googleScriptUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec"></label>
+            <label>Monthly Budget (INR)<input id="monthlyBudget" type="number" min="0"></label>
+            <label>Low Mileage Alert (km/L)<input id="lowMileageLimit" type="number" step="0.1" min="0"></label>
+          </div>
+          <div class="actions">
+            <button id="saveSettingsBtn" class="primary-btn" type="button">Save Connection</button>
+            <button id="testConnectionBtn" class="outline-btn" type="button">Test Connection</button>
+            <button id="removeConnectionBtn" class="danger-btn" type="button">Remove Connection</button>
+            <button id="syncAllBtn" class="success-btn" type="button">Sync Pending Data</button>
+            <button id="backupBtn" class="outline-btn" type="button">Backup JSON</button>
+            <button id="restoreBtn" class="outline-btn" type="button">Restore JSON</button>
+            <input id="restoreFile" type="file" accept="application/json" hidden>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-audit-log" class="page">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Audit Log</h3>
+            <button id="clearAuditBtn" class="outline-btn small" type="button">Clear Audit</button>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr></thead>
+            <tbody id="auditBody"></tbody></table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <datalist id="vehicleList"></datalist>
+  <datalist id="pilotList"></datalist>
+  <datalist id="baseLocationList"></datalist>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
